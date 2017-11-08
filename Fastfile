@@ -19,11 +19,11 @@ platform :android do
 
   desc "Build, sign, align only"
   lane :bsa do |options|
-    gradle(task:"clean")
+    gradle(task: "clean")
     gradle(task: "assembleRelease")
-    Dir.glob("../app/build/outputs/apk/*iTest*.apk").each {|fname| File.delete(fname)}
+    Dir.glob(File.join("../app/build/outputs/apk/**", "*iTest*.apk")).each {|fname| File.delete(fname)}
     sign_apk(
-      apk_path: File.expand_path(Dir.glob("../app/build/outputs/apk/*.apk")[0]),
+      apk_path: File.expand_path(Dir.glob(File.join("../app/build/outputs/apk/**", "*.apk"))[0]),
       keystore_path: ENV["HOME"] + "/Documents/the-path-to-your-own.keystore",
       alias: "your-own-private-key-name",
       keypass: options[:keypass],
@@ -34,11 +34,11 @@ platform :android do
 
   desc "Deploy a new version to Google Play Alpha"
   lane :alpha do |options|
-    gradle(task:"clean")
+    gradle(task: "clean")
     gradle(task: "assembleRelease")
-    Dir.glob("../app/build/outputs/apk/*iTest*.apk").each {|fname| File.delete(fname)}
+    Dir.glob(File.join("../app/build/outputs/apk/**", "*iTest*.apk")).each {|fname| File.delete(fname)}
     sign_apk(
-      apk_path: File.expand_path(Dir.glob("../app/build/outputs/apk/*.apk")[0]),
+      apk_path: File.expand_path(Dir.glob(File.join("../app/build/outputs/apk/**", "*.apk"))[0]),
       keystore_path: ENV["HOME"] + "/Documents/the-path-to-your-own.keystore",
       alias: "your-own-private-key-name",
       keypass: options[:keypass],
